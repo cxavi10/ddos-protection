@@ -1,4 +1,7 @@
 # Spring Boot DDoS 防护库
+<div align="center">
+  <img src="assets/logo.svg" alt="DDoS Protection Logo" width="200" height="200"/>
+</div>
 
 ## 🚀 概述
 
@@ -17,10 +20,11 @@
 
 ```xml
 <dependency>
-    <groupId>cn.ctkqiang.ddoslib</groupId>
+    <groupId>com.github.ctkqiang</groupId>
     <artifactId>ddos-protection</artifactId>
     <version>1.0.0</version>
 </dependency>
+
 ````
 
 ## ⚙️ 配置说明
