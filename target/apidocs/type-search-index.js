@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"DdosDatabase.BlockedIP","h":"","u":""},{"l":"DdosAutoConfig","h":"","u":""},{"l":"DdosDatabase","h":"","u":""},{"l":"DdosInterceptor","h":"","u":""},{"l":"DdosProtectionService","h":"","u":""},{"l":"GeoLocationService","h":"","u":""},{"l":"所有类","h":"","u":"allclasses-index.html"}]

@@ -1,7 +1,0 @@
-cn/ctkqiang/ddoslib/service/GeoLocationService.class
-cn/ctkqiang/ddoslib/service/DdosProtectionService.class
-cn/ctkqiang/ddoslib/service/DdosDatabase.class
-cn/ctkqiang/ddoslib/filter/DdosInterceptor.class
-cn/ctkqiang/ddoslib/config/DdosAutoConfig.class
-cn/ctkqiang/ddoslib/service/DdosDatabase$BlockedIP.class
-cn/ctkqiang/ddoslib/service/DdosProtectionService$RequestInfo.class
