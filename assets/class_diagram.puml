@@ -1,0 +1,95 @@
+@startuml DDoS Protection Library
+
+skinparam class {
+    BackgroundColor #F0F8FF
+    BorderColor #2196F3
+    ArrowColor #1976D2
+    FontSize 14
+}
+
+package "cn.ctkqiang.ddoslib" {
+    class DdosProtectionAutoConfiguration {
+        - properties: DdosProperties
+        + configure(): void
+    }
+
+    class DdosProperties {
+        - enabled: boolean
+        - redirectUrls: List<String>
+        - rateLimit: int
+        - blockDuration: int
+        - windowSize: int
+        + getters()
+        + setters()
+    }
+
+    class DdosInterceptor {
+        - requestCounter: RequestCounter
+        - properties: DdosProperties
+        + preHandle(): boolean
+        - isAttack(): boolean
+        - redirect(): void
+    }
+
+    class RequestCounter {
+        - cache: LoadingCache<String, AtomicInteger>
+        + increment(ip: String): int
+        + reset(ip: String): void
+        - buildCache(): void
+    }
+
+    interface DdosProtectionService {
+        + handleRequest(request: HttpServletRequest): boolean
+        + isBlocked(ip: String): boolean
+        + addToWhitelist(ip: String): void
+    }
+
+    class DdosProtectionServiceImpl {
+        - properties: DdosProperties
+        - requestCounter: RequestCounter
+        - cache: Cache<String, Boolean>
+        + handleRequest(request: HttpServletRequest): boolean
+        + isBlocked(ip: String): boolean
+        + addToWhitelist(ip: String): void
+        - analyzeRequest(request: HttpServletRequest): boolean
+    }
+
+    annotation DdosProtected {
+        String[] whitelist()
+        int rateLimit()
+    }
+
+    class DdosAspect {
+        - service: DdosProtectionService
+        + protectionAdvice(): Object
+        - handleProtection(): boolean
+    }
+}
+
+DdosProtectionAutoConfiguration --> DdosProperties
+DdosProtectionAutoConfiguration --> DdosInterceptor
+DdosInterceptor --> RequestCounter
+DdosInterceptor --> DdosProperties
+DdosProtectionService <|.. DdosProtectionServiceImpl
+DdosProtectionServiceImpl --> RequestCounter
+DdosProtectionServiceImpl --> DdosProperties
+DdosAspect --> DdosProtectionService
+DdosInterceptor --> DdosProtectionService
+
+note right of DdosProtected
+    用于保护特定端点的注解
+    支持自定义防护规则和访问限制
+end note
+
+note right of DdosProperties
+    DDoS防护的可配置属性
+    包含启用开关、重定向URL、
+    访问限制等核心配置
+end note
+
+note right of RequestCounter
+    追踪每个IP地址的请求频率
+    支持自动统计与重置功能
+end note
+
+@enduml

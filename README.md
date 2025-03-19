@@ -1,5 +1,4 @@
-# 🛡️
- Spring Boot DDoS 防护库
+# 🛡️ Spring Boot DDoS 防护库
 <div align="center">
   <img src="assets/logo.svg" alt="DDoS Protection Logo" width="200" height="200"/>
 </div>
@@ -68,8 +67,10 @@ ddos.protection.enabled=true
 ddos.protection.redirect.urls=http://decoy1.com,http://backup-server.com
 ```
 
-说明：
+## 📊 类图设计
+![class_diagram](./assets/DDoSclass.png)
 
+## 说明：
 - 未配置重定向 URL 时，默认使用`/`（主应用）
 - 系统自动保护所有 API 端点
 
