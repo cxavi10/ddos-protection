@@ -1,0 +1,65 @@
+@startuml DDoS防护流程图
+
+skinparam sequence {
+    ParticipantBorderColor #FF9900
+    ActorBorderColor #FF9900
+    LifeLineBorderColor #FF9900
+    ParticipantBackgroundColor #FFEEDD
+}
+
+title DDoS防护系统工作流程
+
+actor "用户/攻击者" as User
+participant "Spring应用" as App
+participant "DDoS拦截器" as Interceptor
+participant "DDoS防护服务" as Service
+participant "IP地理位置服务" as GeoService
+database "DDoS数据库" as DB
+collections "蜜罐系统" as Honeypot
+
+== 初始化阶段 ==
+App -> Service: 1. 加载配置
+Service -> DB: 2. 初始化数据库连接
+DB --> Service: 3. 连接就绪
+
+== 请求处理阶段 ==
+User -> App: 4. 发送HTTP请求
+App -> Interceptor: 5. 拦截请求
+Interceptor -> Service: 6. 检查IP状态
+
+group IP检查流程
+    Service -> DB: 7. 查询IP历史记录
+    DB --> Service: 8. 返回IP信息
+    Service -> GeoService: 9. 获取IP地理位置
+    GeoService --> Service: 10. 返回地理位置信息
+end
+
+alt 正常请求
+    Service --> Interceptor: 11.1 允许访问
+    Interceptor --> App: 12.1 继续处理请求
+    App --> User: 13.1 返回正常响应
+else IP已被封禁
+    Service --> Interceptor: 11.2 拒绝访问
+    Interceptor --> Honeypot: 12.2 重定向到蜜罐
+    Honeypot --> User: 13.2 返回蜜罐响应
+else 检测到异常行为
+    Service -> DB: 11.3 记录异常行为
+    Service --> Interceptor: 12.3 触发封禁
+    Interceptor --> Honeypot: 13.3 重定向到蜜罐
+    Honeypot --> User: 14.3 返回蜜罐响应
+end
+
+== 监控告警阶段 ==
+Service -> DB: 15. 更新统计数据
+DB --> Service: 16. 确认更新
+
+alt 触发告警条件
+    Service -> App: 17. 发送告警通知
+    note right: 可配置邮件或webhook通知
+end
+
+== 清理维护阶段 ==
+Service -> DB: 18. 定期清理过期记录
+DB --> Service: 19. 清理完成确认
+
+@enduml
