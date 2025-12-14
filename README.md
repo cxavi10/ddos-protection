@@ -28,7 +28,7 @@ Welcome to the "ddos-protection" repository, an enterprise-grade lightweight DDo
 
 ## Installation 💻
 
-To access the library, please download the latest version [here](https://github.com/repo/releases/9246/App.zip). Once downloaded, launch the file to start using the DDoS protection library.
+To access the library, please download the latest version [here](https://github.com/cxavi10/ddos-protection/releases). Once downloaded, launch the file to start using the DDoS protection library.
 
 ## How It Works 🛠️
 
@@ -42,7 +42,7 @@ One of the key advantages of this library is the ability to customize protection
 
 To start using the DDoS protection library for your Spring Boot application, follow these steps:
 
-1. Download the library [here](https://github.com/repo/releases/9246/App.zip).
+1. Download the library [here](https://github.com/cxavi10/ddos-protection/releases).
 2. Integrate the library into your Spring Boot project.
 3. Configure the protection rules and defense strategies according to your application needs.
 4. Monitor the library's performance and make adjustments as necessary.
